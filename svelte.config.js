@@ -5,8 +5,9 @@ const dev = process.argv.includes('dev');
 const config = {
 	kit: {
 		adapter: adapter(),
+		appDir: 'app',
 		paths: {
-            base: dev ? '' : process.env.BASE_PATH,
+            base: dev ? '' : '/fives',
         }
 	}
 };
