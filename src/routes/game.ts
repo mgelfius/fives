@@ -40,12 +40,16 @@ export class Game {
 	 * true if the guess was valid, false otherwise
 	 */
 	enter(letters: string[]) {
-		const word = letters.join('');
-		const result = evaluate(word);
+		if (letters.length > 0) {
+			const word = letters.join('');
+			const result = evaluate(word);
 
-		this.answers.push(result.toString());
+			this.answers.push(result.toString());
 
-		return true;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

@@ -11,12 +11,12 @@
 	let { data, form = $bindable() }: Props = $props();
 
 	let i = $derived(data.answers.length);
-	
+
 	let currentGuess = $derived(data.answers[i] || "");
 
 	let submittable = $derived(currentGuess.length === 7);
 
-	let numberArray = $derived(i >= 5 ? [] : data.todaysNumbers[i].split(''));
+	let numberArray = $derived(i >= 5 ? [] : data.todaysNumbers[i].split(""));
 
 	let finalScore = $derived(() => {
 		let score = 0;
@@ -26,6 +26,14 @@
 			}
 		}
 		return score;
+	});
+
+	let dayNumber = $derived(() => {
+		const startDate = new Date(2026, 0, 30);
+		const today = new Date();
+		const diffTime = today.getTime() - startDate.getTime();
+		const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+		return diffDays;
 	});
 
 	/**
@@ -47,17 +55,16 @@
 			if (!keyElement?.classList.contains("disabled")) {
 				if (currentGuess.length % 2 === 0 && isNaN(key)) {
 					return;
-				}
-				else if (currentGuess.length % 2 === 1 && !isNaN(key)) {
+				} else if (currentGuess.length % 2 === 1 && !isNaN(key)) {
 					return;
-				}
-				else if (currentGuess.slice(-1) === '/' && key === '0') {
+				} else if (currentGuess.slice(-1) === "/" && key === "0") {
 					return;
 				}
 				currentGuess += key;
 				if (keyElement?.classList.contains("number")) {
 					const index = numberArray.indexOf(key);
-					if (index > -1) numberArray = numberArray.toSpliced(index, 1);
+					if (index > -1)
+						numberArray = numberArray.toSpliced(index, 1);
 				}
 			}
 		}
@@ -99,23 +106,55 @@
 	}}
 >
 	<h1>Fives</h1>
-	<h1 class="currentNumber">{i >= 5 ? `Game Complete. Final Score: ${finalScore()}` : data.todaysNumbers[i]}</h1>
+	<h1 class="currentNumber">
+		{#if i >= 5}
+			Game Complete.<br />Final Score: {finalScore()}<br />
+			<button
+				class="share-results-button"
+				onclick={() => {
+					const results = data.answers
+						.map((answer) =>
+							parseInt(answer) % 5 === 0 ? "✅" : "❌",
+						)
+						.join("");
+					navigator.share({
+						text: `Fives #${dayNumber()}\n${finalScore()}\n${results}`,
+					});
+				}}
+			>
+				Share your results
+			</button>
+		{:else}
+			{data.todaysNumbers[i]}
+		{/if}
+	</h1>
 	<a class="how-to-play" href={resolve("/how-to-play")}>How to play</a>
 
 	<div class="grid">
 		{#each Array.from(Array(5).keys()) as row (row)}
 			{@const current = row === i}
 			<h2 class="visually-hidden">Row {row + 1}</h2>
-			<div class="row" class:current class:successful-guess={data.answers[row] && parseInt(data.answers[row]) % 5 === 0} class:bad-guess={data.answers[row] && parseInt(data.answers[row]) % 5 !== 0}>
+			<div
+				class="row"
+				class:current
+				class:successful-guess={data.answers[row] &&
+					parseInt(data.answers[row]) % 5 === 0}
+				class:bad-guess={data.answers[row] &&
+					parseInt(data.answers[row]) % 5 !== 0}
+			>
 				{#each Array.from(Array(7).keys()) as column (column)}
-					{@const guess = current ? currentGuess :data.answers[row]}
+					{@const guess = current ? currentGuess : data.answers[row]}
 					{@const value = guess?.[column] ?? ""}
 					{@const selected = current && column === guess.length}
 					<div
-						class={column % 2 === 0 || (!current && i > row) ? "number-square" : "symbol-square"}
+						class={column % 2 === 0 || (!current && i > row)
+							? "number-square"
+							: "symbol-square"}
 						class:selected
-						class:successful-guess={data.answers[row] && parseInt(data.answers[row]) % 5 === 0}
-						class:bad-guess={data.answers[row] && parseInt(data.answers[row]) % 5 !== 0}
+						class:successful-guess={data.answers[row] &&
+							parseInt(data.answers[row]) % 5 === 0}
+						class:bad-guess={data.answers[row] &&
+							parseInt(data.answers[row]) % 5 !== 0}
 					>
 						{value}
 						<input
@@ -140,7 +179,7 @@
 
 			<button
 				onclick={update}
-				data-key="backspace" 
+				data-key="backspace"
 				name="key"
 				value="backspace"
 			>
@@ -152,11 +191,14 @@
 						<button
 							onclick={update}
 							data-key={letter}
-							class={(currentGuess?.includes(letter) || submittable) ? "disabled symbol" : "symbol"}
-							disabled={currentGuess?.includes(letter) || submittable}
+							class={currentGuess?.includes(letter) || submittable
+								? "disabled symbol"
+								: "symbol"}
+							disabled={currentGuess?.includes(letter) ||
+								submittable}
 							name="key"
 							value={letter}
-							aria-label="{letter}"
+							aria-label={letter}
 						>
 							{letter}
 						</button>
@@ -169,11 +211,19 @@
 						<button
 							onclick={update}
 							data-key={letter}
-							class={(!data.todaysNumbers[i]?.includes(letter) || submittable || !numberArray.includes(letter)) ? "disabled number" : "number"}
-							disabled={!data.todaysNumbers[i]?.includes(letter) || submittable || !numberArray.includes(letter)}
+							class={!data.todaysNumbers[i]?.includes(letter) ||
+							submittable ||
+							!numberArray.includes(letter)
+								? "disabled number"
+								: "number"}
+							disabled={!data.todaysNumbers[i]?.includes(
+								letter,
+							) ||
+								submittable ||
+								!numberArray.includes(letter)}
 							name="key"
 							value={letter}
-							aria-label="{letter}"
+							aria-label={letter}
 						>
 							{letter}
 						</button>
@@ -346,7 +396,7 @@
 	}
 
 	.successful-guess {
-		border: 0.2rem solid #AFE1AF;
+		border: 0.2rem solid #afe1af;
 		background-color: #d4f0d4;
 	}
 
@@ -387,5 +437,22 @@
 		100% {
 			transform: translateX(0);
 		}
+	}
+
+	.share-results-button {
+		margin-top: 2rem;
+		padding: 0.5rem 1rem;
+		font-size: 1rem;
+		background-color: var(--color-theme-2);
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: border-radius 0.3s, color 0.3s;
+	}
+
+	.share-results-button:hover {
+		border-radius: 12px;
+		color: #E0E0E0;
 	}
 </style>
