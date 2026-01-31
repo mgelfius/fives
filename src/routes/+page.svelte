@@ -356,7 +356,7 @@
 
 	.keyboard button,
 	.keyboard button:disabled {
-		--size: min(8vw, 4vh, 40px);
+		--size: min(12vw, 10vh, 80px);
 		background-color: white;
 		color: black;
 		width: var(--size);
@@ -374,6 +374,7 @@
 
 	.keyboard button[data-key="enter"],
 	.keyboard button[data-key="backspace"] {
+		--size: min(8vw, 4vh, 40px);
 		position: absolute;
 		bottom: 0;
 		width: calc(1.5 * var(--size));
