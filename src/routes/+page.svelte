@@ -140,8 +140,7 @@
 
 			<button
 				onclick={update}
-				data-key="backspace"
-				formaction="?/update"
+				data-key="backspace" 
 				name="key"
 				value="backspace"
 			>
@@ -155,7 +154,6 @@
 							data-key={letter}
 							class={(currentGuess?.includes(letter) || submittable) ? "disabled symbol" : "symbol"}
 							disabled={currentGuess?.includes(letter) || submittable}
-							formaction="?/update"
 							name="key"
 							value={letter}
 							aria-label="{letter}"
@@ -173,7 +171,6 @@
 							data-key={letter}
 							class={(!data.todaysNumbers[i]?.includes(letter) || submittable || !numberArray.includes(letter)) ? "disabled number" : "number"}
 							disabled={!data.todaysNumbers[i]?.includes(letter) || submittable || !numberArray.includes(letter)}
-							formaction="?/update"
 							name="key"
 							value={letter}
 							aria-label="{letter}"
