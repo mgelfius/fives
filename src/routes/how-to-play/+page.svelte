@@ -18,6 +18,10 @@
 		Division (/) <br />
 		Exponentiation (^) <br />
 	</p>
+	<p>
+		There is no guarantee that a multiple of 5 can be made with the given digits,
+		but if it can, you get points equal to the result.
+	</p>
 
 	<h1>4321</h1>
 	<div class="row">
