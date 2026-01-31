@@ -6,6 +6,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		appDir: 'app',
+		pages: 'build',
 		paths: {
             base: dev ? '' : '/fives',
         }
