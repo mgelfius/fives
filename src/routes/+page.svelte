@@ -89,6 +89,7 @@
 
 <form
 	method="post"
+	action="?/enter"
 	use:enhance={() => {
 		// prevent default callback from resetting the form
 		return ({ update }) => {
