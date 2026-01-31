@@ -4,9 +4,10 @@ const dev = process.argv.includes('dev');
 
 const config = {
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			pages: 'build',
+		}),
 		appDir: 'app',
-		pages: 'build',
 		paths: {
             base: dev ? '' : '/fives',
         }
