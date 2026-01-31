@@ -1,3 +1,5 @@
+import { Random } from "./random";
+
 export class Game {
 	index: number;
 	currentNumber: string;
@@ -16,14 +18,14 @@ export class Game {
 			this.currentNumber = this.todaysNumbers[this.index];
 		} else {
 			const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
-			let seed = parseInt(today);
-			
+			const random = new Random(Number.parseInt(today));
 			this.todaysNumbers = [];
-			for (let i = 0; i < 5; i++) {
+			while (this.todaysNumbers.length < 5) {
 				let num;
 				do {
-					num = Math.floor((Math.sin(seed++) * 10000) % 10000);
-				} while (num <= 0 || num.toString().split('0').length > 2);
+					num = random.nextInt() % 10000;
+					console.dir(num);
+				} while (num <= 0 || num.toString().padStart(4, '0').split('0').length > 2);
 				this.todaysNumbers.push(num.toString().padStart(4, '0'));
 			}
 			this.index = 0;
