@@ -1,4 +1,5 @@
 import { Random } from "./random";
+import { evaluate } from 'mathjs'
 
 export class Game {
 	index: number;
@@ -41,7 +42,7 @@ export class Game {
 	enter(letters: string[]) {
 		const word = letters.join('');
 		const evalWord = word.replace("^", "**");
-		const result = eval(evalWord);
+		const result = evaluate(evalWord);
 
 		this.answers.push(result.toString());
 
