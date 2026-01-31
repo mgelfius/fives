@@ -95,6 +95,7 @@
 </svelte:head>
 
 <form
+	class="game-form"
 	method="post"
 	action="?/enter"
 	use:enhance={() => {
@@ -244,6 +245,10 @@
 		justify-content: center;
 		gap: 1rem;
 		flex: 1;
+	}
+
+	.game-form {
+		max-height: 85vh;
 	}
 
 	.disabled {
