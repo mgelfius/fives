@@ -41,8 +41,7 @@ export class Game {
 	 */
 	enter(letters: string[]) {
 		const word = letters.join('');
-		const evalWord = word.replace("^", "**");
-		const result = evaluate(evalWord);
+		const result = evaluate(word);
 
 		this.answers.push(result.toString());
 
