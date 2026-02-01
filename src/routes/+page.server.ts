@@ -13,10 +13,10 @@ export const load = (({ cookies }) => {
 }) satisfies PageServerLoad;
 
 const getTomorrowDate = () => {
-	let tomorrow = new Date();
-	tomorrow.setDate(tomorrow.getDate() + 1);
-	tomorrow.setHours(0, 0, 0, 0);
-	return tomorrow
+    const today = new Date();
+    const tomorrow = new Date(today.getTime() + 28 * 60 * 60 * 1000);
+    tomorrow.setHours(0, 0, 0, 0);
+    return tomorrow;
 }
 
 export const actions = {

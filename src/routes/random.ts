@@ -5,7 +5,6 @@ export class Random {
 	constructor(seed = 0) {
 		this.a = seed;
 		this.b = seed;
-		console.dir(seed);
 	}
 
 	nextInt() {

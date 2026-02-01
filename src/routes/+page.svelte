@@ -32,7 +32,7 @@
 		const startDate = new Date(2026, 0, 30);
 		const today = new Date();
 		const diffTime = today.getTime() - startDate.getTime();
-		const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+		const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 28));
 		return diffDays;
 	});
 
@@ -106,7 +106,7 @@
 		};
 	}}
 >
-	<h1>Fives</h1>
+	<h1>Fives #{dayNumber()}</h1>
 	<h1 class="currentNumber">
 		{#if i >= 5}
 			Game Complete.<br />Final Score: {finalScore()}<br />

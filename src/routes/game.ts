@@ -18,14 +18,14 @@ export class Game {
 			this.todaysNumbers = todaysNumbers.split(',');
 			this.currentNumber = this.todaysNumbers[this.index];
 		} else {
-			const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
-			const random = new Random(Number.parseInt(today));
+			const today = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/');
+			const todayFormatted = today[2].padStart(4, '0') + today[0].padStart(2, '0') + today[1].padStart(2, '0');
+			const random = new Random(Number.parseInt(todayFormatted));
 			this.todaysNumbers = [];
 			while (this.todaysNumbers.length < 5) {
 				let num;
 				do {
 					num = random.nextInt() % 10000;
-					console.dir(num);
 				} while (num <= 0 || num.toString().padStart(4, '0').split('0').length > 2);
 				this.todaysNumbers.push(num.toString().padStart(4, '0'));
 			}
@@ -56,6 +56,6 @@ export class Game {
 	 * Serialize game state so it can be set as a cookie
 	 */
 	toString() {
-		return `${btoa(new Date().toISOString().split('T')[0].replace(/-/g, ''))}\\${this.answers.join(' ')}\\${this.todaysNumbers.join(',')}`;
+		return `${btoa(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0].split('/').join(''))}\\${this.answers.join(' ')}\\${this.todaysNumbers.join(',')}`;
 	}
 }
