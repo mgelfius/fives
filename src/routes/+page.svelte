@@ -32,7 +32,7 @@
 		const startDate = new Date(2026, 0, 30);
 		const today = new Date();
 		const diffTime = today.getTime() - startDate.getTime();
-		const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 28));
+		const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 20));
 		return diffDays;
 	});
 
